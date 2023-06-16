@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { Desktop, Mobile } from "./responsive/responsive";
+import Header from "./components/desktop/Header";
+import Content from "./components/desktop/Content";
+import BottomBar from "./components/desktop/BottomBar";
+import { createContext } from "react";
+
+export const GlobalContext = createContext();
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentModel, setCurrentModel] = useState({});
+  const [currentImage, setCurrentImage] = useState("");
+  const [currentColor, setCurrentColor] = useState({});
+  const [currentAccessories, setCurrentAccessories] = useState([]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <GlobalContext.Provider
+        value={{
+          currentPage,
+          setCurrentPage,
+          currentModel,
+          setCurrentModel,
+          currentColor,
+          setCurrentColor,
+          currentImage,
+          setCurrentImage,
+          currentAccessories,
+          setCurrentAccessories,
+        }}
+      >
+        <Desktop>
+          <div className="containerDesktop">
+            <Header />
+            <Content />
+            <BottomBar />
+          </div>
+        </Desktop>
+        <Mobile>PIRLA</Mobile>
+      </GlobalContext.Provider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
